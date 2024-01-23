@@ -1,8 +1,8 @@
 Metadata-Version: 2.1
 Name: RBAC-service
-Version: 0.1
+Version: 0.2
 Summary: Django Role-Based Permission App
-Home-page: https://github.com/yourusername/your-django-app
+Home-page: https://github.com/shirani98/rbac_service
 Author: Mahdi Shirani
 Author-email: Shirani9882@gmail.com
 License: MIT
