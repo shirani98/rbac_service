@@ -1,11 +1,11 @@
 MANIFEST.in
-README.md
+README.rst
 setup.py
-RBAC_Service.egg-info/PKG-INFO
-RBAC_Service.egg-info/SOURCES.txt
-RBAC_Service.egg-info/dependency_links.txt
-RBAC_Service.egg-info/requires.txt
-RBAC_Service.egg-info/top_level.txt
+RBAC_service.egg-info/PKG-INFO
+RBAC_service.egg-info/SOURCES.txt
+RBAC_service.egg-info/dependency_links.txt
+RBAC_service.egg-info/requires.txt
+RBAC_service.egg-info/top_level.txt
 rbac_service/__init__.py
 rbac_service/admin.py
 rbac_service/apps.py
