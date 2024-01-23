@@ -1,51 +1,112 @@
-Django Role-Based Permissions API
-=================================
+Django RBAC Permissions 
+=======================
 
-This project implements a powerful and flexible Role-Based Access
-Control (RBAC) system, providing granular permissions management down to
-individual URLs or model-based permissions. Designed to integrate
-seamlessly with Django’s class-based views and viewsets, it offers a
-high level of control to administrators for securing access to API
-endpoints.
+.. contents:: Table of Contents
+   :depth: 3
+
+Introduction
+============
+
+Django RBAC Permissions is a Django app designed to provide a comprehensive Role-Based Access Control (RBAC) system. The app allows administrators to manage permissions with granularity, specifying permissions based on URL paths or the Django models, with URL permissions taking precedence. It can be easily integrated with Django's class-based views and viewsets.
 
 Features
---------
+========
 
--  Assign permissions based on models or specific URL paths.
--  Prioritize URL-based permissions over model permissions for
-   fine-grained access control.
--  Easily applicable to API views or viewsets via ``permission_classes``
-   and ``permission_queryset``.
+- Map standard CRUD actions to corresponding HTTP methods for consistency.
+- Support both URL path-based and model content type-based permissions.
+- Prioritize URL-based permissions over model permissions.
+- Check user roles and permissions with customizable permission checks.
+- Easy to plug into almost any Django Rest Framework (DRF) view with minimal setup.
 
-Permission Types
-----------------
+Requirements
+============
 
-Administrators can set permissions within the Django admin panel. There
-are two ways to set permissions:
+- Django >= 2.2
+- Django Rest Framework >= 3.11
+- Python >= 3.6
 
-1. URL-Based Permissions: URL permissions have higher priority and can
-   override model permissions. They allow you to restrict access to
-   specific endpoints without relying on linked models. To use them,
-   make sure to set up the url_path field when creating permission
-   records.
+Installation
+============
 
-2. Model-Based Permissions: When more general control is needed, model
-   permissions can be applied. After creating permissions in the admin
-   panel, define permission_classes and permission_queryset with the
-   corresponding ORM class in your views.
+To install Django RBAC Permissions within your Django project, follow these steps:
 
-Getting Started
----------------
+#. Install this repository.
 
-Start by cloning this repository into your Django project and include
-the required files.
+   .. code-block:: bash
 
-Admin Interface:
-Use the Django admin to configure permissions for specific URL paths or
-models. To define permissions for a particular view, create an instance
-of the Permission model with the desired URL or model settings.
+       pip install RBAC-service
 
-Configuration codes
-To enforce permissions in your API views or viewsets, define the
-``permission_classes`` and ``permission_queryset``. Here’s an example on
-how to apply permissions in a sample API view and viewset:
+#. Add the `permissions`, `roles`, and `users` applications to your `INSTALLED_APPS` setting in your Django settings file:
+
+   .. code-block:: python
+
+       INSTALLED_APPS = [
+           # ... other installed applications ...
+
+           'rbac_service',
+       ]
+
+#. Run the following commands to create the permissions required tables:
+
+   .. code-block:: bash
+
+       python manage.py makemigrations
+       python manage.py migrate
+
+Usage
+=====
+
+After installing the Django RBAC Permissions app, you can add role-based access control to your views as follows:
+
+#. For views:
+
+   .. code-block:: python
+
+       from rbac_service.permission_classes import RoleBasedPermission
+
+       class MySecureView(APIView):
+           permission_classes = (RoleBasedPermission,)
+           permission_queryset = MyModel.objects.all() #Your used model in this view
+           # Your view code here
+
+#. For viewsets:
+
+   .. code-block:: python
+
+       class MyModelViewSet(viewsets.ModelViewSet):
+           permission_classes = (RoleBasedPermission,)
+           permission_queryset = MyModel.objects.all() #Your used model in this view
+           # Your viewset code here
+
+Configure the permissions for your roles in the Django admin interface, where you can assign URL or model-based permissions to each role.
+
+Contributing
+============
+
+Contributions are welcome, and they are greatly appreciated! Every little bit helps, and a credit will always be given.
+
+You can contribute in many ways:
+
+#. Report Bugs
+#. Fix Bugs
+#. Add Documentation
+#. Suggest Features
+
+For details on how to contribute, please check out the CONTRIBUTING.rst file in the repository.
+
+License
+=======
+
+Django RBAC Permissions is licensed under the MIT License - see the LICENSE.rst file for more details.
+
+Contact
+=======
+
+If you have any questions or want to discuss the project further, please open issues on the repository issue tracker.
+
+Acknowledgements
+================
+
+- The Django community for their invaluable resources.
+- The developers and maintainers who work on Django and Django Rest Framework.
+
